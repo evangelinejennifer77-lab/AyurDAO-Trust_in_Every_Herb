@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AyurDAO — Enterprise Identity, Access & Asset Governance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#091e3a;
+  --panel:#ffffff;
+  --panel-2:#f8fafc;
+  --hairline:#cbd5e1;
+  --hairline-subtle:#e2e8f0;
+  --text:#0f172a;
+  --muted:#475569;
+  --brand-blue:#155a8a;
+  --brand-hover:#0e446d;
+  --teal:#0d9488;
+  --teal-dim:#115e59;
+  --seal:#b91c1c;
+  --seal-dim:#991b1b;
+  --gold:#b45309;
+  --good:#15803d;
+  --bad:#b91c1c;
+  --radius:8px;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:#f8fafc;color:var(--text);font-family:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:700;color:var(--ink);margin:0 0 8px;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 80px;}
+
+/* Government Hero Banner: High-contrast, prestigious, authoritative */
+.hero{
+  padding:44px 24px 40px;
+  background:linear-gradient(135deg, #0b2238 0%, #15466e 60%, #1b5383 100%);
+  border-bottom:4px solid #b4872f;
+  box-shadow:0 4px 20px rgba(11,34,56,0.12);
+  color:#ffffff;
+}
+.hero .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  color:#fbbf24;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+.hero h1{
+  font-size:34px;
+  line-height:1.22;
+  max-width:860px;
+  color:#ffffff !important;
+  text-shadow:0 2px 4px rgba(0,0,0,0.25);
+  margin:0 0 14px;
+}
+.hero p.sub{
+  color:#e2e8f0;
+  max-width:720px;
+  font-size:15px;
+  line-height:1.6;
+  margin:0;
+}
+.layers{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;}
+.layer-chip{
+  border:1px solid rgba(255,255,255,0.25);
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(8px);
+  border-radius:999px;
+  padding:8px 16px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px;
+  color:#f8fafc;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.layer-chip b{color:#ffffff;font-weight:600;}
+.layer-chip .dot{width:8px;height:8px;border-radius:50%;background:#38bdf8;box-shadow:0 0 6px currentColor;}
+
+/* Sections */
+.section{padding:38px 0;border-bottom:1px solid var(--hairline-subtle);}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;gap:16px;flex-wrap:wrap;}
+.section-head h2{font-size:22px;color:var(--ink);font-weight:700;}
+.section-head .num{font-family:'IBM Plex Mono',monospace;color:var(--brand-blue);font-size:12px;font-weight:600;background:#e0f2fe;padding:4px 9px;border-radius:4px;letter-spacing:.05em;}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:860px){.grid2{grid-template-columns:1fr;}.grid3{grid-template-columns:1fr;}}
+
+/* Cards */
+.card{
+  background:var(--panel);
+  border:1px solid var(--hairline-subtle);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:0 2px 10px rgba(15,23,42,0.04);
+}
+.card h3{
+  font-size:15px;
+  color:var(--ink);
+  font-family:'IBM Plex Sans',sans-serif;
+  font-weight:700;
+  margin-bottom:14px;
+}
+label{
+  display:block;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:600;
+  margin:14px 0 6px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+label:first-child{margin-top:0;}
+input,select{
+  width:100%;
+  background:#ffffff;
+  border:1px solid var(--hairline);
+  color:var(--text);
+  padding:10px 12px;
+  border-radius:6px;
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:14px;
+  font-weight:500;
+  transition:border-color .15s, box-shadow .15s;
+}
+input:focus,select:focus{
+  outline:none;
+  border-color:var(--brand-blue);
+  box-shadow:0 0 0 3px rgba(21,90,138,0.15);
+}
+
+/* Buttons */
+button{
+  cursor:pointer;
+  border:none;
+  border-radius:6px;
+  padding:10px 18px;
+  font-family:'IBM Plex Sans',sans-serif;
+  font-weight:600;
+  font-size:13.5px;
+  transition:all .15s ease-in-out;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+button:hover{opacity:.92;}
+.btn-primary{background:var(--brand-blue);color:#ffffff;}
+.btn-primary:hover{background:var(--brand-hover);}
+.btn-ghost{background:#ffffff;border:1px solid var(--hairline);color:#1e293b;}
+.btn-ghost:hover{background:#f1f5f9;border-color:#94a3b8;}
+.btn-danger{background:var(--seal);color:#ffffff;}
+.btn-danger:hover{background:var(--seal-dim);}
+.row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+
+/* Directory & Asset Lists */
+.identity-list,.asset-list{display:flex;flex-direction:column;gap:8px;margin-top:14px;max-height:300px;overflow:auto;}
+.item{
+  border:1px solid var(--hairline-subtle);
+  background:var(--panel-2);
+  border-radius:6px;
+  padding:11px 14px;
+  font-size:13px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  transition:background .12s, border-color .12s;
+  color:var(--text);
+}
+.item:hover{background:#f1f5f9;border-color:var(--hairline);}
+.item .did{color:var(--brand-blue);font-size:12px;font-weight:500;}
+
+/* Badges */
+.role-tag{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  padding:3px 8px;
+  border-radius:4px;
+  border:1px solid transparent;
+  font-weight:600;
+  display:inline-block;
+}
+.role-Admin{background:#fef3c7;color:#92400e;border-color:#fde68a;}
+.role-Manager{background:#ccfbf1;color:#115e59;border-color:#99f6e4;}
+.role-Auditor{background:#e0e7ff;color:#3730a3;border-color:#c7d2fe;}
+.role-User{background:#f1f5f9;color:#475569;border-color:#cbd5e1;}
+
+/* Session Status Bar */
+.acting-bar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#ffffff;
+  border:1px solid var(--hairline);
+  border-left:4px solid var(--brand-blue);
+  border-radius:8px;
+  padding:14px 18px;
+  margin-bottom:24px;
+  box-shadow:0 2px 8px rgba(15,23,42,0.05);
+  color:var(--text);
+  flex-wrap:wrap;
+}
+.acting-bar .lbl{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
+
+/* Ledger Blocks */
+.ledger-block{
+  border:1px solid var(--hairline-subtle);
+  background:#ffffff;
+  border-radius:8px;
+  padding:14px 16px;
+  margin-bottom:12px;
+  box-shadow:0 1px 4px rgba(15,23,42,0.04);
+  position:relative;
+}
+.ledger-block.invalid{border-color:#ef4444;background:#fef2f2;}
+.ledger-block .blk-head{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#64748b;margin-bottom:6px;}
+.ledger-block .blk-type{color:var(--ink);font-weight:700;font-size:13.5px;font-family:'IBM Plex Sans',sans-serif;}
+.hash-line{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#64748b;word-break:break-all;margin-top:6px;}
+.hash-line.bad{color:#dc2626;font-weight:600;}
+.editable-data{
+  width:100%;
+  background:#f8fafc;
+  border:1px dashed var(--hairline);
+  color:var(--text);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  padding:8px 10px;
+  border-radius:5px;
+  margin-top:8px;
+}
+.editable-data:focus{background:#ffffff;border-color:var(--brand-blue);outline:none;}
+
+/* Toasts */
+.toast{font-size:12.5px;padding:10px 14px;border-radius:6px;margin-top:12px;font-family:'IBM Plex Mono',monospace;font-weight:500;}
+.toast.ok{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;}
+.toast.deny{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;}
+
+/* Security Grading */
+.grade-wrap{display:grid;grid-template-columns:220px 1fr;gap:32px;align-items:center;}
+@media(max-width:860px){.grade-wrap{grid-template-columns:1fr;}}
+.seal{width:200px;height:200px;margin:0 auto;position:relative;}
+.factor{margin-bottom:16px;}
+.factor .flabel{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.factor .flabel span:last-child{font-family:'IBM Plex Mono',monospace;color:var(--brand-blue);}
+.bar-track{height:10px;background:#e2e8f0;border-radius:99px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:99px;background:var(--brand-blue);transition:width .5s ease;}
+.explain{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.5;}
+.notice{font-size:12.5px;color:#334155;background:#f8fafc;border:1px solid var(--hairline);padding:10px 14px;border-radius:6px;margin-top:14px;}
+.mfa-panel{margin-top:16px;padding:16px 18px;border:1px solid #bae6fd;background:#f0f9ff;border-radius:8px;color:var(--text);}
+.mfa-code{font-family:'IBM Plex Mono',monospace;font-size:20px;letter-spacing:.16em;color:var(--gold);background:#ffffff;border:1px dashed var(--gold);padding:10px 12px;border-radius:7px;text-align:center;margin:8px 0;}
+.dual-admin{border:1px solid #fcd34d;background:#fffdf5;border-left:4px solid #f59e0b;border-radius:8px;padding:16px 18px;margin-bottom:24px;box-shadow:0 2px 8px rgba(245,158,11,0.08);}
+.dual-admin .status{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+.approval-pill{font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:4px 10px;border-radius:999px;border:1px solid transparent;font-weight:600;}
+.approval-pill.ok{background:#ecfdf5;color:#065f46;border-color:#a7f3d0;}
+.approval-pill.wait{background:#fffbeb;color:#92400e;border-color:#fde68a;}
+.locked-action{opacity:.55;}
+
+/* Tables */
+table{width:100%;font-size:13px;border-collapse:collapse;color:var(--text);}
+table th{padding:8px 10px;background:#f1f5f9;color:#334155;font-weight:600;border:1px solid var(--hairline-subtle);}
+table td{padding:8px 10px;border:1px solid var(--hairline-subtle);color:var(--text);}
+
+/* Login Portal Styles */
+.gov-login-shell{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px;background:linear-gradient(135deg,#eef2f6 0%,#f8fafc 55%,#e9eef4 100%);}
+.gov-login-card{max-width:520px;width:100%;background:#ffffff;border:1px solid #cfd7e1;box-shadow:0 18px 55px rgba(22,40,58,.12);padding:34px 38px;border-radius:8px;}
+.gov-brand-row{display:flex;align-items:center;gap:14px;}
+.gov-emblem{width:52px;height:52px;border:2px solid #155a8a;background:#f0f7ff;border-radius:50%;display:grid;place-items:center;color:#155a8a;font-weight:800;letter-spacing:.08em;font-size:18px;}
+.gov-title-small{font-weight:800;letter-spacing:.12em;font-size:17px;color:#0f2942;}
+.gov-rule{height:3px;background:linear-gradient(90deg,#155a8a 0 72%,#b4872f 72%);margin:20px 0;}
+.gov-login-card h2{margin:8px 0 10px;font-size:26px;color:#0f172a;font-weight:800;letter-spacing:-.02em;}
+.gov-notice{border-left:4px solid #b4872f;background:#f8fafc;border:1px solid #e2e8f0;border-left:4px solid #b4872f;padding:12px 14px;margin:16px 0;font-size:12.5px;line-height:1.55;color:#334155;border-radius:4px;}
+.gov-footer-note{font-size:11.5px;color:#64748b;line-height:1.55;margin-top:18px;border-top:1px solid #e2e8f0;padding-top:14px;}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="gov-login-shell">
+  <div class="gov-login-card">
+    <div class="gov-brand-row">
+      <div class="gov-emblem">AD</div>
+      <div><div class="eyebrow">SECURE DIGITAL GOVERNANCE</div><div class="gov-title-small">AYURDAO</div></div>
+    </div>
+    <div class="gov-rule"></div>
+    <div class="eyebrow">AUTHORIZED ACCESS ONLY</div>
+    <h2>Enterprise Identity &amp; Access Portal</h2>
+    <p class="explain">Authenticate with your organizational credentials and a FreeOTP-compatible authenticator code.</p>
+
+    <details style="margin:12px 0 16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:6px;padding:8px 12px;font-size:12.5px;">
+      <summary style="cursor:pointer;font-weight:600;color:var(--brand-blue);user-select:none;">🔑 Demo Accounts &amp; Passwords (Click to view)</summary>
+      <div style="margin-top:8px;display:grid;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#334155;">
+        <div>• <b>Rohith</b> (Admin 1 / IT Security Head): <code>admin123</code></div>
+        <div>• <b>Jennifer</b> (Admin 2 / Co-Admin): <code>admin456</code></div>
+        <div>• <b>Pavani</b> (Team Manager): <code>manager123</code></div>
+        <div>• <b>Mahalakshmi</b> (Compliance Auditor): <code>auditor123</code></div>
+        <div>• <b>Dharshini</b> (Employee): <code>employee123</code></div>
+      </div>
+    </details>
+
+    <div class="gov-notice"><b>Security notice</b><br>Access is restricted to authorized personnel. All successful and failed authentication events are recorded in the tamper-evident audit ledger.</div>
+    <label>Identity</label>
+    <select id="loginSelect" onchange="updateLoginWelcome()"></select>
+    <div id="loginWelcome" class="explain" style="min-height:16px;margin:8px 0 0;color:var(--teal);"></div>
+    <label>Password</label>
+    <input id="loginPassword" type="password" placeholder="Enter your password">
+    <div class="row"><button id="passwordBtn" class="btn-primary" style="width:100%;" onclick="login()">Continue</button></div>
+    <div id="mfaPanel" class="mfa-panel" style="display:none;">
+      <div style="font-weight:700;margin-bottom:8px;">Authenticator Verification (FreeOTP / TOTP)</div>
+      <div id="enrollPanel">
+        <div class="explain">Scan the QR code below with <b>FreeOTP</b> (or Google / Microsoft Authenticator), then enter the 6-digit code shown in the app.</div>
+        <img id="totpQrImg" style="display:block;margin:14px auto;background:#fff;padding:10px;border:1px solid var(--hairline);border-radius:8px;max-width:220px;width:100%;" alt="FreeOTP QR Code">
+        <canvas id="totpQr" style="display:none;"></canvas>
+        <div id="totpSecret" class="explain" style="text-align:center;word-break:break-all;font-family:'IBM Plex Mono',monospace;margin:6px 0;"></div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+          <button class="btn-ghost" type="button" style="font-size:11.5px;padding:4px 10px;" onclick="resetMfaSecret()">↻ Reset / New QR Code</button>
+          <button class="btn-ghost" type="button" style="font-size:11.5px;padding:4px 10px;color:var(--brand-blue);border-color:var(--brand-blue);font-weight:600;" onclick="fillDemoTotp('login')">⚡ Auto-fill FreeOTP Code (Demo)</button>
+        </div>
+      </div>
+      <div id="mfaVerifyHint" class="explain">Enter the current 6-digit verification code from your authenticator app.</div>
+      <label>6-digit authenticator code</label>
+      <input id="mfaInput" autocomplete="one-time-code" inputmode="numeric" maxlength="6" placeholder="000000">
+      <div class="row"><button class="btn-primary" style="width:100%;" onclick="verifyMfa()">Verify &amp; Log in</button></div>
+      <div id="mfaToast"></div>
+    </div>
+    <div id="loginToast"></div>
+    <p class="gov-footer-note">Protected by password authentication, time-based one-time passwords (TOTP), role-based access control and dual-admin authorization.</p>
+  </div>
+</div>
+
+<div id="dashboardScreen" style="display:none;">
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">SIH 26125 — Enterprise Identity &amp; Access Governance Platform</div>
+    <h1>Your org's employee identities, system permissions, and issued assets shouldn't live in three disconnected tools you have to trust separately.</h1>
+    <p class="sub">AyurDAO replaces a fragmented Active-Directory + IAM-tool + asset-register stack with one governed ledger: every employee's decentralized identity, every access grant, and every asset issued to them — hash-chained, tamper-evident, and scored live with a Security Grade an IT security head can actually act on.</p>
+    <div class="layers">
+      <div class="layer-chip"><span class="dot" style="background:var(--gold)"></span>Layer 1 — <b>Identity</b> (DID + signature)</div>
+      <div class="layer-chip"><span class="dot"></span>Layer 2 — <b>Access</b> (RBAC, contract-enforced)</div>
+      <div class="layer-chip"><span class="dot" style="background:var(--seal)"></span>Layer 3 — <b>Asset</b> (NFT ownership + provenance)</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="section">
+    <div id="sessionPanel" class="acting-bar">
+      <span class="lbl">Logged in as</span>
+      <span id="sessionName" style="font-weight:600;"></span>
+      <span class="lbl" id="actingRoleLabel" style="margin-left:6px;"></span>
+      <button class="btn-ghost" style="margin-left:auto;" onclick="logout()">Log out</button>
+      <span class="notice" style="margin:0;flex:1 1 100%;min-width:220px;">Every modification below requires two distinct Admin identities to be authenticated in the same session. Viewing remains available to authorized roles.</span>
+    </div>
+    <div id="dualAdminPanel" class="dual-admin">
+      <div style="font-weight:600;color:var(--text);">👥 Two-Admin Modification Control</div>
+      <div class="explain">Admin 1 is the primary operator. Admin 2 must independently authenticate before any data modification is committed.</div>
+      <div class="status">
+        <span id="admin1Status" class="approval-pill wait">Admin 1: waiting</span>
+        <span id="admin2Status" class="approval-pill wait">Admin 2: not authenticated</span>
+      </div>
+      <div id="admin2AuthBox" style="margin-top:12px;">
+        <label>Admin 2</label>
+        <select id="admin2Select"></select>
+        <label>Admin 2 password</label>
+        <input id="admin2Password" type="password" placeholder="Enter Admin 2 password">
+        <div class="row"><button class="btn-primary" onclick="startAdmin2Auth()">Authenticate Admin 2</button></div>
+        <div id="admin2MfaPanel" class="mfa-panel" style="display:none;margin-top:12px;">
+          <div style="font-weight:600;color:var(--text);">Admin 2 MFA (FreeOTP / TOTP)</div>
+          <div class="explain">Scan the QR code with Admin 2's FreeOTP app, or enter the current 6-digit code.</div>
+          <div id="admin2EnrollPanel">
+            <img id="admin2TotpQrImg" style="display:block;margin:12px auto;background:#fff;padding:10px;border:1px solid var(--hairline);border-radius:8px;max-width:180px;width:100%;" alt="Admin 2 QR Code">
+            <div id="admin2TotpSecret" class="explain" style="text-align:center;word-break:break-all;font-family:'IBM Plex Mono',monospace;margin:6px 0;"></div>
+            <div style="display:flex;justify-content:center;gap:8px;margin:8px 0;flex-wrap:wrap;">
+              <button class="btn-ghost" type="button" style="font-size:11.5px;padding:4px 10px;color:var(--brand-blue);border-color:var(--brand-blue);font-weight:600;" onclick="fillDemoTotp('admin2')">⚡ Auto-fill FreeOTP Code (Demo)</button>
+            </div>
+          </div>
+          <label>Admin 2 authenticator code</label>
+          <input id="admin2MfaInput" placeholder="000000" inputmode="numeric" maxlength="6">
+          <div class="row"><button class="btn-primary" onclick="verifyAdmin2Mfa()">Verify Admin 2</button><button class="btn-ghost" onclick="clearAdmin2Approval()">Clear</button></div>
+          <div id="admin2Toast"></div>
+        </div>
+      </div>
+      <div id="dualAdminToast"></div>
+    </div>
+  </div>
+
+  <!-- IDENTITY -->
+  <div class="section" id="sec-identity">
+    <div class="section-head"><h2>🪪 Employee Identity Vault</h2><span class="num">LAYER 01 · DID</span></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Onboard an employee — issue a Decentralized Identifier <span class="role-tag role-Admin">2 ADMINS</span></h3>
+        <label>Employee name</label>
+        <input id="idName" placeholder="e.g. Ananya Rao">
+        <label>Set login password</label>
+        <input id="idPassword" type="password" placeholder="e.g. a real password, hashed before storage">
+        <label>Initial role</label>
+        <select id="idRole"><option>Admin</option><option>Manager</option><option>Auditor</option><option selected>User</option></select>
+        <div class="row"><button class="btn-primary" onclick="createIdentity()">Generate DID + Key Pair</button></div>
+        <div id="idToast"></div>
+        <p class="explain" style="margin-top:10px;">Available to any logged-in employee in this demo — in production, onboarding a new employee would itself require an Admin session, the same way role changes and asset issuance already do below.</p>
+      </div>
+      <div class="card">
+        <h3>Workforce directory</h3>
+        <div class="identity-list" id="identityList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCESS -->
+  <div class="section" id="sec-access">
+    <div class="section-head"><h2>🛡️ System Access Control (RBAC)</h2><span class="num">LAYER 02 · Roles</span></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Change an employee's access role <span class="role-tag role-Admin">2 ADMINS</span></h3>
+        <label>Employee</label>
+        <select id="roleTarget"></select>
+        <label>New role</label>
+        <select id="roleNew"><option>Admin</option><option>Manager</option><option>Auditor</option><option>User</option></select>
+        <div class="row"><button class="btn-primary" onclick="assignRole()">Apply Role Change</button></div>
+        <div id="roleToast"></div>
+      </div>
+      <div class="card">
+        <h3>Org-chart → permission mapping</h3>
+        <table style="width:100%;font-size:12.5px;border-collapse:collapse;">
+          <tr style="color:var(--muted);text-align:left;"><th style="padding:4px 0;">Action</th><th>IT Security Head<br><span style="font-weight:400;color:var(--muted)">(Admin)</span></th><th>Team Manager<br><span style="font-weight:400;color:var(--muted)">(Manager)</span></th><th>Compliance Auditor<br><span style="font-weight:400;color:var(--muted)">(Auditor)</span></th><th>Employee<br><span style="font-weight:400;color:var(--muted)">(User)</span></th></tr>
+          <tr><td style="padding:4px 0;">Assign role</td><td>✅</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td style="padding:4px 0;">Issue asset/license</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+          <tr><td style="padding:4px 0;">Transfer asset/license</td><td>✅</td><td>✅</td><td>—</td><td>own only</td></tr>
+          <tr><td style="padding:4px 0;">View audit ledger</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSET -->
+  <div class="section" id="sec-asset">
+    <div class="section-head"><h2>🎟️ Digital Asset & License Registry (NFT)</h2><span class="num">LAYER 03 · Ownership</span></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Issue a new asset or software license <span class="role-tag role-Admin">2 ADMINS</span></h3>
+        <label>Asset / license name</label>
+        <input id="assetName" placeholder="e.g. ERP Software License #004">
+        <label>Assign to employee</label>
+        <select id="assetOwner"></select>
+        <div class="row"><button class="btn-primary" onclick="mintAsset()">Issue as NFT to Employee</button></div>
+        <div id="mintToast"></div>
+      </div>
+      <div class="card">
+        <h3>Reassign / hand over <span class="role-tag role-Admin">2 ADMINS</span></h3>
+        <label>Asset</label>
+        <select id="transferAsset"></select>
+        <label>New owner</label>
+        <select id="transferTo"></select>
+        <div class="row"><button class="btn-ghost" onclick="transferAsset()">Transfer</button></div>
+        <div id="transferToast"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <h3>Issued assets & licenses</h3>
+      <div class="asset-list" id="assetList"></div>
+    </div>
+  </div>
+
+  <!-- LEDGER -->
+  <div class="section" id="sec-ledger">
+    <div class="section-head"><h2>⛓️ Immutable Audit Ledger</h2><span class="num">HASH-CHAINED · SHA-256</span></div>
+    <p class="explain">Every event above is written as a block containing a real SHA-256 hash of its own contents plus the previous block's hash. Try editing a block's data field below, then hit <b>Verify Chain Integrity</b> — you'll see exactly where trust breaks, and everything downstream of it.</p>
+    <div class="row"><button class="btn-danger" onclick="verifyChain()">Verify Chain Integrity</button><button class="btn-ghost" onclick="resetDemo()">Reset Demo</button></div>
+    <div id="ledgerView" style="margin-top:18px;"></div>
+  </div>
+
+  <!-- GRADING -->
+  <div class="section" id="sec-grade" style="border-bottom:none;">
+    <div class="section-head"><h2>🏵️ Security Grading Engine</h2><span class="num">ADMIN ONLY · LIVE COMPOSITE SCORE</span></div>
+    <p class="explain">This is the CISO's dashboard: a live, explainable score of how well-governed the org's current identity/access/asset configuration actually is — not just "is the ledger running," but "is it running safely." Deliberately restricted to the IT Security Head — a Manager or Employee seeing the org's live security posture would itself be an access-control leak.</p>
+    <div id="gradeLocked" class="card" style="margin-top:16px;display:none;">
+      <h3>🔒 Restricted</h3>
+      <p class="explain" style="margin-top:0;">You're currently acting as a role other than IT Security Head (Admin). The Security Grade is only visible to the Admin role — switch "Acting as" above to view it.</p>
+    </div>
+    <div id="gradeContent" class="card" style="margin-top:16px;">
+      <div class="grade-wrap">
+        <div class="seal" id="sealSvgHolder"></div>
+        <div>
+          <div class="factor">
+            <div class="flabel"><span>Ledger Integrity <span style="color:var(--muted)">(40%)</span></span><span id="f1score">—</span></div>
+            <div class="bar-track"><div class="bar-fill" id="f1bar" style="width:0%"></div></div>
+            <div class="explain" id="f1explain"></div>
+          </div>
+          <div class="factor">
+            <div class="flabel"><span>RBAC Hygiene <span style="color:var(--muted)">(25%)</span></span><span id="f2score">—</span></div>
+            <div class="bar-track"><div class="bar-fill" id="f2bar" style="width:0%;background:var(--gold)"></div></div>
+            <div class="explain" id="f2explain"></div>
+          </div>
+          <div class="factor">
+            <div class="flabel"><span>Identity Assurance <span style="color:var(--muted)">(20%)</span></span><span id="f3score">—</span></div>
+            <div class="bar-track"><div class="bar-fill" id="f3bar" style="width:0%;background:#9AA7C7"></div></div>
+            <div class="explain" id="f3explain"></div>
+          </div>
+          <div class="factor">
+            <div class="flabel"><span>Asset Provenance <span style="color:var(--muted)">(15%)</span></span><span id="f4score">—</span></div>
+            <div class="bar-track"><div class="bar-fill" id="f4bar" style="width:0%;background:var(--seal)"></div></div>
+            <div class="explain" id="f4explain"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row"><button class="btn-primary" onclick="gradeSecurity()">Recompute Security Grade</button></div>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<footer>AYURDAO — Enterprise Identity, Access & Asset Governance · SIH 26125 · TOTP/FreeOTP MFA · Dual-admin authorization · Prototype deployment</footer>
+
+<script>
+// ---------- state ----------
+let identities = [];
+let assets = [];
+let ledger = [];
+let idCounter = 0, assetCounter = 0;
+let currentSessionDid = null; // set only by a successful login() — never by direct selection
+let mfaChallenge = null;
+let admin2Challenge = null;
+let admin2SessionDid = null;
+let mfaExpiryTimer = null;
+
+
+const PERMS = {
+  Admin:   ['assignRole','mint','transfer','createIdentity','view'],
+  Manager: ['view'],
+  Auditor: ['view'],
+  User:    ['view']
+};
+
+const MOD_ACTIONS = new Set(['assignRole','mint','transfer','createIdentity']);
+
+function dualAdminReady(){
+  const me = actingIdentity();
+  return !!(me && me.role === 'Admin' && admin2SessionDid && admin2SessionDid !== me.did);
+}
+
+function requireDualAdmin(toastId, action){
+  const me = actingIdentity();
+  if(!me || me.role !== 'Admin'){
+    toast(toastId, `Denied — "${me?.role || 'Unauthenticated'}" cannot modify data. Admin 1 is required.`, false);
+    return false;
+  }
+  if(!dualAdminReady()){
+    toast(toastId, `Locked — this modification requires two distinct authenticated Admins. Authenticate Admin 2 above.`, false);
+    return false;
+  }
+  return true;
+}
+
+async function sha256(str){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function randHex(bytes){
+  const arr = new Uint8Array(bytes);
+  crypto.getRandomValues(arr);
+  return Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+async function addBlock(type, data, actorDid){
+  const prevHash = ledger.length ? ledger[ledger.length-1].hash : '0'.repeat(64);
+  const timestamp = new Date().toISOString();
+  const dataStr = JSON.stringify(data);
+  const hash = await sha256(ledger.length + timestamp + type + dataStr + actorDid + prevHash);
+  ledger.push({index: ledger.length, timestamp, type, data: dataStr, actorDid, prevHash, hash});
+  renderLedger();
+}
+
+function actingIdentity(){
+  // Session-derived only — there is no dropdown that can "become" an identity anymore.
+  // The only way currentSessionDid gets set is a password check succeeding in login().
+  return identities.find(i=>i.did===currentSessionDid) || null;
+}
+
+function can(action){
+  const me = actingIdentity();
+  if(!me) return false;
+  return (PERMS[me.role]||[]).includes(action);
+}
+
+function toast(elId, msg, ok){
+  document.getElementById(elId).innerHTML = `<div class="toast ${ok?'ok':'deny'}">${ok?'✅':'🚫'} ${msg}</div>`;
+}
+
+// ---------- login / logout & resilient MFA engine ----------
+const API_BASE = (window.location.protocol === 'file:' || (!window.location.host.includes(':3000') && !window.location.port)) ? 'http://localhost:3000' : '';
+const localMfaSecrets = JSON.parse(localStorage.getItem('ayurdao_local_mfa_secrets') || '{}');
+
+function saveLocalSecrets(){
+  try { localStorage.setItem('ayurdao_local_mfa_secrets', JSON.stringify(localMfaSecrets)); } catch(e){}
+}
+
+function clientRandomBase32(bytes = 20){
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+  const raw = new Uint8Array(bytes);
+  crypto.getRandomValues(raw);
+  let bits = '';
+  for(const b of raw) bits += b.toString(2).padStart(8, '0');
+  let out = '';
+  for(let i = 0; i < bits.length; i += 5) out += alphabet[parseInt(bits.slice(i, i + 5).padEnd(5, '0'), 2)];
+  return out;
+}
+
+function clientBase32Decode(input){
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+  let bits = '';
+  for(const c of input.replace(/=+$/, '').toUpperCase()){
+    const n = alphabet.indexOf(c);
+    if(n < 0) throw new Error('Invalid Base32');
+    bits += n.toString(2).padStart(5, '0');
+  }
+  const bytes = [];
+  for(let i = 0; i + 8 <= bits.length; i += 8) bytes.push(parseInt(bits.slice(i, i + 8), 2));
+  return new Uint8Array(bytes);
+}
+
+async function clientHotp(secret, counter){
+  const keyBuf = clientBase32Decode(secret);
+  const key = await crypto.subtle.importKey(
+    'raw', keyBuf, { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']
+  );
+  const msg = new ArrayBuffer(8);
+  const view = new DataView(msg);
+  view.setBigUint64(0, BigInt(counter), false);
+  const sig = await crypto.subtle.sign('HMAC', key, msg);
+  const h = new Uint8Array(sig);
+  const offset = h[h.length - 1] & 0xf;
+  const bin = ((h[offset] & 0x7f) << 24) | ((h[offset + 1] & 0xff) << 16) | ((h[offset + 2] & 0xff) << 8) | (h[offset + 3] & 0xff);
+  return String(bin % 1000000).padStart(6, '0');
+}
+
+async function clientVerifyTotp(secret, code){
+  const step = 30 * 1000;
+  const now = Math.floor(Date.now() / step);
+  for(const c of [now - 1, now, now + 1]){
+    const expected = await clientHotp(secret, c);
+    if(expected === code) return true;
+  }
+  return false;
+}
+
+async function clientMfaFallback(endpoint, body){
+  const { did, email, code, reset } = body;
+  if(endpoint === '/api/mfa/enroll'){
+    let secret = localMfaSecrets[did] || (email ? localMfaSecrets[email] : null);
+    let enrollmentRequired = false;
+    if(!secret || reset){
+      secret = clientRandomBase32();
+      localMfaSecrets[did] = secret;
+      if(email) localMfaSecrets[email] = secret;
+      saveLocalSecrets();
+      enrollmentRequired = true;
+    }
+    const issuer = 'AyurDAO';
+    const label = encodeURIComponent(`${issuer}:${email || did}`);
+    const uri = `otpauth://totp/${label}?secret=${secret}&issuer=${encodeURIComponent(issuer)}&algorithm=SHA1&digits=6&period=30`;
+    let qrDataUrl = '';
+    if(window.QRCode && typeof window.QRCode.toDataURL === 'function'){
+      try { qrDataUrl = await window.QRCode.toDataURL(uri, { width: 220, margin: 1 }); } catch(e){}
+    }
+    return { ok: true, data: { ok: true, secret, otpauthUri: uri, qrDataUrl, enrollmentRequired, fallback: true } };
+  }
+  if(endpoint === '/api/mfa/verify'){
+    const secret = localMfaSecrets[did] || (email ? localMfaSecrets[email] : null);
+    if(!secret) return { ok: false, data: { message: 'Authenticator is not enrolled for this identity.' } };
+    if(!/^\d{6}$/.test(code)) return { ok: false, data: { message: 'Enter the 6-digit authenticator code.' } };
+    const valid = await clientVerifyTotp(secret, code);
+    if(!valid) return { ok: false, data: { message: 'Incorrect or expired authenticator code.' } };
+    return { ok: true, data: { ok: true, fallback: true } };
+  }
+  return { ok: false, data: { message: 'Unsupported request.' } };
+}
+
+async function mfaApi(path, body){
+  try{
+    const targetUrl = API_BASE ? `${API_BASE}${path}` : path;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const res = await fetch(targetUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    const data = await res.json().catch(() => ({}));
+    if(res.ok && data.ok !== false) return { ok: true, data };
+    return clientMfaFallback(path, body);
+  } catch(e){
+    return clientMfaFallback(path, body);
+  }
+}
+
+async function fillDemoTotp(purpose='login'){
+  let target;
+  if(purpose==='login'){
+    const did=document.getElementById('loginSelect').value;
+    target=identities.find(i=>i.did===did);
+  } else {
+    target=identities.find(i=>i.did===admin2Challenge?.did);
+  }
+  if(!target) return;
+  try {
+    const targetUrl = `${API_BASE || ''}/api/mfa/current-code?did=${encodeURIComponent(target.did)}&email=${encodeURIComponent(target.email)}`;
+    const res = await fetch(targetUrl);
+    if(res.ok){
+      const data = await res.json();
+      if(data.code){
+        const inputId = purpose==='login' ? 'mfaInput' : 'admin2MfaInput';
+        document.getElementById(inputId).value = data.code;
+        toast(purpose==='login' ? 'mfaToast' : 'admin2Toast', `Auto-filled code (${data.code}) — valid for ${data.remaining}s`, true);
+        return;
+      }
+    }
+  } catch(e){}
+
+  const secret = localMfaSecrets[target.did] || localMfaSecrets[target.email];
+  if(secret){
+    const step = 30 * 1000;
+    const now = Math.floor(Date.now() / step);
+    const code = await clientHotp(secret, now);
+    const remaining = Math.ceil((step - (Date.now() % step)) / 1000);
+    const inputId = purpose==='login' ? 'mfaInput' : 'admin2MfaInput';
+    document.getElementById(inputId).value = code;
+    toast(purpose==='login' ? 'mfaToast' : 'admin2Toast', `Auto-filled code (${code}) — valid for ${remaining}s`, true);
+  } else {
+    toast(purpose==='login' ? 'mfaToast' : 'admin2Toast', 'Scan QR code in FreeOTP or wait for enrollment.', false);
+  }
+}
+
+async function prepareMfa(target, purpose='login', reset=false){
+  const result=await mfaApi('/api/mfa/enroll',{did:target.did, email:target.email, purpose, reset});
+  if(!result.ok){ toast(purpose==='admin2'?'admin2Toast':'loginToast',result.data.message||'Unable to prepare authenticator.',false); return false; }
+  const data=result.data;
+  const panel=document.getElementById(purpose==='admin2'?'admin2MfaPanel':'mfaPanel');
+  panel.style.display='';
+  if(purpose==='login'){
+    document.getElementById('passwordBtn').disabled=true;
+    document.getElementById('mfaInput').value='';
+    const enroll=document.getElementById('enrollPanel');
+    enroll.style.display='';
+    document.getElementById('mfaVerifyHint').textContent='Scan the QR code with FreeOTP, then enter the 6-digit verification code.';
+    document.getElementById('totpSecret').textContent='Manual setup key: '+(data.secret || 'Available in FreeOTP');
+    if(data.qrDataUrl){
+      document.getElementById('totpQrImg').src = data.qrDataUrl;
+    }
+    document.getElementById('mfaInput').focus();
+  } else {
+    document.getElementById('admin2MfaInput').value='';
+    if(data.qrDataUrl){
+      document.getElementById('admin2TotpQrImg').src = data.qrDataUrl;
+      document.getElementById('admin2TotpSecret').textContent='Manual setup key: '+(data.secret || '');
+    }
+    document.getElementById('admin2MfaInput').focus();
+  }
+  return true;
+}
+
+async function resetMfaSecret(){
+  const did=document.getElementById('loginSelect').value, target=identities.find(i=>i.did===did);
+  if(!target) return;
+  toast('loginToast','Generating fresh authenticator QR code...',true);
+  await prepareMfa(target, 'login', true);
+  toast('loginToast','Fresh QR code ready. Scan it in FreeOTP and enter the code.',true);
+}
+
+async function verifyTotp(email,did,code,purpose){
+  return await mfaApi('/api/mfa/verify',{email,did,code,purpose});
+}
+
+function updateLoginWelcome(){
+  const did=document.getElementById('loginSelect').value, target=identities.find(i=>i.did===did);
+  document.getElementById('loginWelcome').textContent=target?`Welcome, ${target.name.split(' — ')[0]} (${target.email}) — enter your password to continue.`:'';
+  document.getElementById('mfaPanel').style.display='none';
+  document.getElementById('passwordBtn').disabled=false;
+  document.getElementById('loginToast').innerHTML=''; document.getElementById('mfaToast').innerHTML='';
+}
+
+async function login(){
+  const did=document.getElementById('loginSelect').value, password=document.getElementById('loginPassword').value, target=identities.find(i=>i.did===did);
+  if(!did || !target){
+    toast('loginToast','Please select your identity from the dropdown first.',false);
+    return;
+  }
+  const attemptHash=await sha256(password);
+  if(attemptHash===target.passwordHash){
+    if(await prepareMfa(target,'login')) toast('loginToast','Password verified. Scan QR with FreeOTP and enter code.',true);
+  }else{
+    await addBlock('LOGIN_FAILED',{attemptedName:target.name},'unauthenticated-session');
+    toast('loginToast','Incorrect password. This failed attempt has been logged.',false);
+  }
+}
+
+async function verifyMfa(){
+  const targetDid=document.getElementById('loginSelect').value, code=document.getElementById('mfaInput').value.trim(), target=identities.find(i=>i.did===targetDid);
+  if(!/^\d{6}$/.test(code)){ toast('mfaToast','Enter the 6-digit code shown in FreeOTP.',false); return; }
+  const result=await verifyTotp(target?.email,targetDid,code,'login');
+  if(!result.ok){ await addBlock('MFA_FAILED',{attemptedName:target?.name||'unknown'},'unauthenticated-session'); toast('mfaToast',result.data.message||'Incorrect or expired authenticator code.',false); return; }
+  clearTimeout(mfaExpiryTimer); currentSessionDid=targetDid; admin2SessionDid=null; admin2Challenge=null;
+  document.getElementById('loginPassword').value=''; document.getElementById('mfaInput').value='';
+  await addBlock('MFA_SUCCESS',{name:target.name,email:target.email,method:'TOTP/FreeOTP'},targetDid);
+  await addBlock('LOGIN_SUCCESS',{name:target.name,email:target.email,mfa:true},targetDid);
+  renderAll();
+}
+
+function logout(){
+  currentSessionDid=null; admin2SessionDid=null; admin2Challenge=null; clearInterval(mfaExpiryTimer);
+  document.getElementById('loginPassword').value=''; 
+  document.getElementById('passwordBtn').disabled=false;
+  document.getElementById('loginToast').innerHTML=''; 
+  document.getElementById('mfaToast').innerHTML=''; 
+  document.getElementById('mfaPanel').style.display='none'; 
+  renderAll();
+}
+
+// ---------- two-admin co-approval ----------
+function adminCandidates(){
+  const me=actingIdentity();
+  return identities.filter(i=>i.role==='Admin' && i.did!==me?.did);
+}
+
+async function startAdmin2Auth(){
+  const me=actingIdentity(), did=document.getElementById('admin2Select').value;
+  const password=document.getElementById('admin2Password').value, target=identities.find(i=>i.did===did);
+  if(!me || me.role!=='Admin'){ toast('dualAdminToast','Admin 1 must be logged in first.',false); return; }
+  if(!target || target.role!=='Admin' || target.did===me.did){ toast('dualAdminToast','Admin 2 must be a different Admin identity.',false); return; }
+  const attemptHash=await sha256(password);
+  if(attemptHash!==target.passwordHash){
+    await addBlock('ADMIN2_AUTH_FAILED',{attemptedName:target.name},me.did);
+    toast('admin2Toast','Admin 2 password is incorrect.',false); return;
+  }
+  admin2Challenge={did:target.did};
+  if(await prepareMfa(target,'admin2')) toast('admin2Toast',`Admin 2 password verified. Complete FreeOTP verification on ${target.name}.`,true);
+}
+
+async function verifyAdmin2Mfa(){
+  const me=actingIdentity();
+  if(!me || me.role!=='Admin' || !admin2Challenge){ toast('admin2Toast','No valid Admin 2 challenge. Start again.',false); return; }
+  const code=document.getElementById('admin2MfaInput').value.trim();
+  const admin2=identities.find(i=>i.did===admin2Challenge.did);
+  const result=await verifyTotp(admin2?.email,admin2?.did,code,'admin2');
+  if(!result.ok){
+    await addBlock('ADMIN2_MFA_FAILED',{attemptedName:admin2?.name||'unknown'},me.did);
+    toast('admin2Toast',result.data.message || 'Incorrect or expired Admin 2 authenticator code.',false); return;
+  }
+  admin2SessionDid=admin2Challenge.did; admin2Challenge.used=true;
+  await addBlock('DUAL_ADMIN_AUTHORIZED',{admin1:me.did,admin1Email:me.email,admin2:admin2.did,admin2Email:admin2.email},me.did);
+  document.getElementById('admin2Password').value='';
+  document.getElementById('admin2MfaInput').value='';
+  document.getElementById('admin2MfaPanel').style.display='none';
+  toast('dualAdminToast',`Two-admin approval active: ${me.name} + ${admin2.name}. Modifications are unlocked.`,true);
+  renderAll();
+}
+
+function clearAdmin2Approval(){
+  admin2SessionDid=null; admin2Challenge=null;
+  document.getElementById('admin2Password').value='';
+  document.getElementById('admin2MfaInput').value='';
+  document.getElementById('admin2MfaPanel').style.display='none';
+  document.getElementById('admin2Toast').innerHTML='';
+  toast('dualAdminToast','Admin 2 approval cleared. Modifications are locked again.',true);
+  renderAll();
+}
+
+// ---------- identity ----------
+async function createIdentity(){
+  if(!requireDualAdmin('idToast','createIdentity')) return;
+  const name = document.getElementById('idName').value.trim() || `identity-${idCounter+1}`;
+  const emailInput = document.getElementById('idEmail');
+  const email = (emailInput ? emailInput.value.trim() : '') || (name.toLowerCase().replace(/[^a-z0-9]/g,'') + '@sairamtap.edu.in');
+  const password = document.getElementById('idPassword').value || 'changeme';
+  const role = document.getElementById('idRole').value;
+  const pub = randHex(16);
+  const did = 'did:demo:' + (await sha256(pub+name)).slice(0,16);
+  const passwordHash = await sha256(password);
+  const rec = {id: ++idCounter, name, email, did, role, pub, passwordHash};
+  identities.push(rec);
+  const actor = actingIdentity();
+  await addBlock('IDENTITY_CREATED', {name, email, did, role}, actor ? actor.did : 'did:demo:genesis');
+  toast('idToast', `DID issued: ${did}`, true);
+  document.getElementById('idName').value='';
+  if(emailInput) emailInput.value='';
+  document.getElementById('idPassword').value='';
+  renderAll();
+}
+
+// ---------- access ----------
+async function assignRole(){
+  const targetDid = document.getElementById('roleTarget').value;
+  const newRole = document.getElementById('roleNew').value;
+  const target = identities.find(i=>i.did===targetDid);
+  if(!target) return;
+  if(!requireDualAdmin('roleToast','assignRole')){
+    await addBlock('ACCESS_DENIED', {attempted:'assignRole', target: targetDid, byRole: actingIdentity()?.role, dualAdmin:false}, actingIdentity()?.did || 'unknown');
+    return;
+  }
+  const oldRole = target.role;
+  target.role = newRole;
+  await addBlock('ROLE_ASSIGNED', {target: targetDid, from: oldRole, to: newRole}, actingIdentity().did);
+  toast('roleToast', `${target.name} moved from ${oldRole} → ${newRole}`, true);
+  renderAll();
+}
+
+// ---------- assets ----------
+async function mintAsset(){
+  const name = document.getElementById('assetName').value.trim();
+  const ownerDid = document.getElementById('assetOwner').value;
+  if(!name || !ownerDid) return;
+  if(!requireDualAdmin('mintToast','mint')){
+    await addBlock('ACCESS_DENIED', {attempted:'mint', asset:name, byRole: actingIdentity()?.role, dualAdmin:false}, actingIdentity()?.did || 'unknown');
+    return;
+  }
+  const tokenId = 'NFT-' + (++assetCounter).toString().padStart(4,'0');
+  const asset = {tokenId, name, ownerDid, history:[{event:'MINTED', to: ownerDid}]};
+  assets.push(asset);
+  await addBlock('ASSET_MINTED', {tokenId, name, owner: ownerDid}, actingIdentity().did);
+  toast('mintToast', `${tokenId} minted to ${identities.find(i=>i.did===ownerDid)?.name}`, true);
+  document.getElementById('assetName').value='';
+  renderAll();
+}
+
+async function transferAsset(){
+  const tokenId = document.getElementById('transferAsset').value;
+  const newOwner = document.getElementById('transferTo').value;
+  const asset = assets.find(a=>a.tokenId===tokenId);
+  if(!asset || !newOwner) return;
+  const me = actingIdentity();
+  if(!requireDualAdmin('transferToast','transfer')){
+    await addBlock('ACCESS_DENIED', {attempted:'transfer', asset: tokenId, byRole: me?.role, dualAdmin:false}, me?.did || 'unknown');
+    return;
+  }
+  const oldOwner = asset.ownerDid;
+  asset.ownerDid = newOwner;
+  asset.history.push({event:'TRANSFERRED', from: oldOwner, to: newOwner});
+  await addBlock('ASSET_TRANSFERRED', {tokenId, from: oldOwner, to: newOwner}, me.did);
+  toast('transferToast', `${tokenId} transferred to ${identities.find(i=>i.did===newOwner)?.name}`, true);
+  renderAll();
+}
+
+// ---------- ledger render + tamper/verify ----------
+function renderLedger(){
+  const el = document.getElementById('ledgerView');
+  if(!el) return;
+  el.innerHTML = ledger.map(b=>`
+    <div class="ledger-block" id="block-${b.index}">
+      <div class="blk-head"><span>#${b.index} · ${new Date(b.timestamp).toLocaleTimeString()}</span><span>actor: ${b.actorDid.slice(0,18)}…</span></div>
+      <div class="blk-type">${b.type.replaceAll('_',' ')}</div>
+      <textarea class="editable-data" rows="1" oninput="ledger[${b.index}].data=this.value">${b.data}</textarea>
+      <div class="hash-line">hash: ${b.hash}</div>
+      <div class="hash-line">prev: ${b.prevHash}</div>
+    </div>
+  `).join('') || '<p class="explain">No activity yet — create an identity above to write the genesis block.</p>';
+}
+
+async function verifyChain(){
+  let prevHash = '0'.repeat(64);
+  let brokenAt = -1;
+  for(const b of ledger){
+    const recomputed = await sha256(b.index + b.timestamp + b.type + b.data + b.actorDid + prevHash);
+    const el = document.getElementById('block-'+b.index);
+    if(el){
+      if(recomputed !== b.hash || b.prevHash !== prevHash){
+        el.classList.add('invalid');
+        if(brokenAt===-1) brokenAt = b.index;
+      } else {
+        el.classList.remove('invalid');
+      }
+    }
+    prevHash = b.hash;
+  }
+  const el = document.getElementById('ledgerView');
+  if(el){
+    const oldNotice = el.querySelector('.verify-notice');
+    if(oldNotice) oldNotice.remove();
+    const notice = document.createElement('div');
+    notice.className = 'notice verify-notice';
+    notice.style.marginTop='12px';
+    notice.innerHTML = brokenAt===-1
+      ? '✅ Chain verified — every block\'s content matches its recorded hash, and every prevHash link is intact.'
+      : `🚫 Tamper detected starting at block #${brokenAt} — its recomputed hash no longer matches what was recorded, so every block after it is now provably untrustworthy.`;
+    el.appendChild(notice);
+  }
+}
+
+function updateDualAdminUI(){
+  const me=actingIdentity(), panel=document.getElementById('dualAdminPanel');
+  if(!panel) return;
+  const isAdmin=me?.role==='Admin'; panel.style.display=isAdmin?'':'none';
+  if(!isAdmin) return;
+  document.getElementById('admin1Status').textContent=`Admin 1: ${me.name}`;
+  document.getElementById('admin1Status').className='approval-pill ok';
+  const admin2=identities.find(i=>i.did===admin2SessionDid), s=document.getElementById('admin2Status');
+  if(admin2){ s.textContent=`Admin 2: ${admin2.name} (${admin2.email})`; s.className='approval-pill ok'; }
+  else { s.textContent='Admin 2: not authenticated'; s.className='approval-pill wait'; }
+  const candidates=adminCandidates();
+  document.getElementById('admin2Select').innerHTML=candidates.map(i=>`<option value="${i.did}">${i.name} — ${i.email}</option>`).join('') || '<option value="">No second Admin available</option>';
+  document.querySelectorAll('#sec-identity button,#sec-access button,#sec-asset button').forEach(btn=>{
+    if(['createIdentity()','assignRole()','mintAsset()','transferAsset()'].some(x=>btn.getAttribute('onclick')?.includes(x)))
+      btn.classList.toggle('locked-action',!dualAdminReady());
+  });
+}
+
+// ---------- renders ----------
+function renderAll(){
+  // identity list
+  document.getElementById('identityList').innerHTML = identities.map(i=>`
+    <div class="item"><div><div>${i.name}</div><div class="did mono">${i.email} · ${i.did}</div></div><span class="role-tag role-${i.role}">${i.role}</span></div>
+  `).join('') || '<p class="explain">No identities yet.</p>';
+
+  // asset list
+  document.getElementById('assetList').innerHTML = assets.map(a=>{
+    const owner = identities.find(i=>i.did===a.ownerDid);
+    return `<div class="item"><div><div>${a.tokenId} — ${a.name}</div><div class="did mono">owner: ${owner?owner.name:a.ownerDid}</div></div><span class="role-tag">${a.history.length} event${a.history.length>1?'s':''}</span></div>`;
+  }).join('') || '<p class="explain">No assets minted yet.</p>';
+
+  // selects
+  const idOptions = `<option value="" disabled selected>Select your registered identity</option>` + identities.map(i=>`<option value="${i.did}">${i.name} — ${i.email} (${i.role})</option>`).join('');
+  document.getElementById('loginSelect').innerHTML = idOptions;
+  updateLoginWelcome();
+  document.getElementById('roleTarget').innerHTML = idOptions;
+  document.getElementById('assetOwner').innerHTML = idOptions;
+  document.getElementById('transferTo').innerHTML = idOptions;
+  document.getElementById('transferAsset').innerHTML = assets.map(a=>`<option value="${a.tokenId}">${a.tokenId} — ${a.name}</option>`).join('');
+
+  // session gate: swap the whole login page for the whole dashboard, not just a panel
+  const me = actingIdentity();
+  document.getElementById('loginScreen').style.display = me ? 'none' : 'flex';
+  document.getElementById('dashboardScreen').style.display = me ? '' : 'none';
+  if(me){
+    document.getElementById('sessionName').textContent = me.name;
+    document.getElementById('actingRoleLabel').innerHTML = `<span class="role-tag role-${me.role}">${me.role}</span>`;
+  }
+  updateGradeVisibility();
+   updateDualAdminUI();
+}
+
+function updateGradeVisibility(){
+  const me = actingIdentity();
+  const isAdmin = me && me.role === 'Admin';
+  document.getElementById('gradeContent').style.display = isAdmin ? '' : 'none';
+  document.getElementById('gradeLocked').style.display = isAdmin ? 'none' : '';
+}
+
+// (No change-event listener needed here anymore — the session is now driven only by
+// login()/logout(), both of which already call renderAll() themselves.)
+
+// ---------- security grading ----------
+function sealSvg(grade, color){
+  return `<svg viewBox="0 0 200 200" width="200" height="200">
+    <polygon points="100,6 178,50 178,150 100,194 22,150 22,50" fill="none" stroke="${color}" stroke-width="3"/>
+    <polygon points="100,26 160,60 160,140 100,174 40,140 40,60" fill="none" stroke="${color}" stroke-width="1.5" opacity="0.5"/>
+    <text x="100" y="118" text-anchor="middle" font-family="Fraunces, serif" font-size="72" fill="${color}" font-weight="700">${grade}</text>
+  </svg>`;
+}
+
+async function gradeSecurity(){
+  if(!can('view') || (actingIdentity() && actingIdentity().role !== 'Admin')){
+    return; // defense in depth — button is also hidden for non-Admins, this blocks direct calls too
+  }
+  // Factor 1: ledger integrity
+  let prevHash = '0'.repeat(64), validBlocks = 0;
+  for(const b of ledger){
+    const recomputed = await sha256(b.index + b.timestamp + b.type + b.data + b.actorDid + prevHash);
+    if(recomputed === b.hash && b.prevHash === prevHash) validBlocks++;
+    prevHash = b.hash;
+  }
+  const f1 = ledger.length ? Math.round((validBlocks/ledger.length)*100) : 100;
+
+  // Factor 2: RBAC hygiene — recalibrated to actually move as the org's role setup changes
+  const adminCount = identities.filter(i=>i.role==='Admin').length;
+  const deniedLogged = ledger.some(b=>b.type==='ACCESS_DENIED');
+  const dualAdminTested = ledger.some(b=>b.type==='DUAL_ADMIN_AUTHORIZED');
+  const mfaTested = ledger.some(b=>b.type==='MFA_SUCCESS');
+  const adminRatio = identities.length ? adminCount/identities.length : 0;
+  let f2 = 100;
+  let f2notes = [];
+  if(adminCount===0){ f2 -= 60; f2notes.push('no Admin exists — nobody can govern the system'); }
+  else if(adminCount===1){ f2 -= 30; f2notes.push('single Admin = single point of failure if that identity is compromised'); }
+  if(adminCount<2){ f2 -= 35; f2notes.push('fewer than two Admin identities — dual-control cannot operate'); }
+  if(adminCount>1 && adminRatio>0.5){ f2 -= 15; f2notes.push('over half of identities hold Admin — least-privilege is weak'); }
+  if(!deniedLogged && ledger.length>0){ f2 -= 10; f2notes.push('RBAC has never actually been tested against a denied action'); }
+  if(!dualAdminTested && ledger.length>0){ f2 -= 15; f2notes.push('two-admin authorization has not yet been exercised'); }
+  if(!mfaTested && ledger.length>0){ f2 -= 10; f2notes.push('MFA has not yet been exercised'); }
+  f2 = Math.max(0, f2);
+
+  // Factor 3: identity assurance — capped below 100 because "Acting as" in this prototype is a
+  // selection, not a cryptographic proof of control (see roadmap: challenge-signature auth).
+  // A production build issuing real keypairs + sign/verify would remove this cap.
+  const dids = identities.map(i=>i.did);
+  const uniqueDids = new Set(dids).size;
+  const uniquenessRatio = identities.length ? uniqueDids/identities.length : 1;
+  const AUTH_CAP = 85; // MFA is present; ceiling remains until real keypair sign/verify is deployed
+  const f3 = identities.length ? Math.round(AUTH_CAP * uniquenessRatio) : AUTH_CAP;
+
+  // Factor 4: asset provenance
+  const assetsWithFullHistory = assets.filter(a=>a.history[0]?.event==='MINTED').length;
+  const f4 = assets.length ? Math.round((assetsWithFullHistory/assets.length)*100) : 100;
+
+  const total = Math.round(f1*0.40 + f2*0.25 + f3*0.20 + f4*0.15);
+  let grade, color;
+  if(total>=90){grade='A';color='#5FAE7A';}
+  else if(total>=75){grade='B';color='#4FA39B';}
+  else if(total>=60){grade='C';color='#C9A25A';}
+  else if(total>=40){grade='D';color='#C1584F';}
+  else {grade='F';color='#9C3B3B';}
+
+  document.getElementById('sealSvgHolder').innerHTML = sealSvg(grade, color) + `<div style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:13px;color:${color};margin-top:6px;">SCORE ${total}/100</div>`;
+
+  document.getElementById('f1score').textContent = f1+'/100';
+  document.getElementById('f1bar').style.width = f1+'%';
+  document.getElementById('f1explain').textContent = ledger.length ? `${validBlocks}/${ledger.length} blocks pass hash + chain-link verification.` : 'No ledger activity yet.';
+
+  document.getElementById('f2score').textContent = f2+'/100';
+  document.getElementById('f2bar').style.width = f2+'%';
+  document.getElementById('f2explain').textContent = f2notes.length ? f2notes.join('; ') + '.' : 'Least-privilege posture looks healthy.';
+
+  document.getElementById('f3score').textContent = f3+'/100';
+  document.getElementById('f3bar').style.width = f3+'%';
+  document.getElementById('f3explain').textContent = `Capped at ${AUTH_CAP}/100 — MFA is verified in this prototype; identity is still not cryptographically proven with per-identity signatures (next fix: keypair + sign/verify). ${uniqueDids}/${identities.length||0} DIDs are unique.`;
+
+  document.getElementById('f4score').textContent = f4+'/100';
+  document.getElementById('f4bar').style.width = f4+'%';
+  document.getElementById('f4explain').textContent = assets.length ? `${assetsWithFullHistory}/${assets.length} assets have an unbroken provenance chain from mint.` : 'No assets minted yet.';
+}
+
+function resetDemo(){
+  identities = []; assets = []; ledger = []; idCounter = 0; assetCounter = 0;
+  currentSessionDid = null;
+  renderAll(); renderLedger();
+  document.getElementById('sealSvgHolder').innerHTML = sealSvg('?','#3A4750');
+  ['f1','f2','f3','f4'].forEach(f=>{document.getElementById(f+'score').textContent='—';document.getElementById(f+'bar').style.width='0%';document.getElementById(f+'explain').textContent='';});
+}
+
+// Seed helper bypasses the dual-admin gate only during initial demo bootstrap.
+async function seedIdentity(name,email,password,role){
+  const pub=randHex(16);
+  const did='did:demo:'+(await sha256(pub+name)).slice(0,16);
+  const passwordHash=await sha256(password);
+  identities.push({id:++idCounter,name,email,did,role,pub,passwordHash});
+  await addBlock('IDENTITY_CREATED',{name,email,did,role},'did:demo:genesis');
+}
+
+// ---------- seed demo data ----------
+async function seed(){
+  await seedIdentity('Rohith — IT Security Head','sec25sc101@sairamtap.edu.in','admin123','Admin');
+  await seedIdentity('Jennifer — Security Co-Admin','rohithv0142007@gmail.com','admin456','Admin');
+  await seedIdentity('Pavani — Team Manager','sec24sc041@sairamtap.edu.in','manager123','Manager');
+  await seedIdentity('Mahalakshmi — Compliance Auditor','Sec24sc002@sairamtap.edu.in','auditor123','Auditor');
+  await seedIdentity('Dharshini — Employee','sec25sc063@sairamtap.edu.in','employee123','User');
+
+  // Seed demo asset directly so that asset lists & security scoring start with live data
+  const adminDid = identities[0].did;
+  const employeeDid = identities[4].did;
+  const tokenId = 'NFT-0001';
+  assets.push({tokenId, name: 'CRM System Access License #001', ownerDid: employeeDid, history: [{event: 'MINTED', to: employeeDid}]});
+  await addBlock('ASSET_MINTED', {tokenId, name: 'CRM System Access License #001', owner: employeeDid}, adminDid);
+  assetCounter = 1;
+
+  // Render the seeded identities immediately so the login dropdown is populated.
+  // Do not auto-login here: FreeOTP requires the user to enroll/verify their own device.
+  renderAll();
+  renderLedger();
+  resetSealOnly();
+}
+function resetSealOnly(){
+  document.getElementById('sealSvgHolder').innerHTML = sealSvg('?','#3A4750');
+}
+seed();
+</script>
+</body>
+</html>
